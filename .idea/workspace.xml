@@ -19,6 +19,7 @@
   </component>
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
+    <option name="clangWarnings" value="-Wno-unused-variable,-Werror=implicit-function-declaration,-Wshadow,-Wno-shadow-field-in-constructor-modified,-Wno-shadow-ivar,-Wno--Wdeprecated-declarations" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
@@ -53,7 +54,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1589206222477</updated>
-      <workItem from="1589206225306" duration="1272000" />
+      <workItem from="1589206225306" duration="4953000" />
     </task>
     <servers />
   </component>
@@ -65,6 +66,22 @@
       <screen x="0" y="0" width="2560" height="1410" />
     </state>
     <state x="872" y="363" key="#Notifications/2560.-214.1050.1650/-1050.-229.1050.1650/1681.-1294.1920.1050/0.0.2560.1410@0.0.2560.1410" timestamp="1589207834899" />
+    <state width="2517" height="404" key="GridCell.Tab.0.bottom" timestamp="1589226221083">
+      <screen x="0" y="0" width="2560" height="1410" />
+    </state>
+    <state width="2517" height="404" key="GridCell.Tab.0.bottom/2560.-214.1050.1650/-1050.-229.1050.1650/1681.-1294.1920.1050/0.0.2560.1410@0.0.2560.1410" timestamp="1589226221083" />
+    <state width="2517" height="404" key="GridCell.Tab.0.center" timestamp="1589226221082">
+      <screen x="0" y="0" width="2560" height="1410" />
+    </state>
+    <state width="2517" height="404" key="GridCell.Tab.0.center/2560.-214.1050.1650/-1050.-229.1050.1650/1681.-1294.1920.1050/0.0.2560.1410@0.0.2560.1410" timestamp="1589226221082" />
+    <state width="2517" height="404" key="GridCell.Tab.0.left" timestamp="1589226221082">
+      <screen x="0" y="0" width="2560" height="1410" />
+    </state>
+    <state width="2517" height="404" key="GridCell.Tab.0.left/2560.-214.1050.1650/-1050.-229.1050.1650/1681.-1294.1920.1050/0.0.2560.1410@0.0.2560.1410" timestamp="1589226221082" />
+    <state width="2517" height="404" key="GridCell.Tab.0.right" timestamp="1589226221083">
+      <screen x="0" y="0" width="2560" height="1410" />
+    </state>
+    <state width="2517" height="404" key="GridCell.Tab.0.right/2560.-214.1050.1650/-1050.-229.1050.1650/1681.-1294.1920.1050/0.0.2560.1410@0.0.2560.1410" timestamp="1589226221083" />
     <state x="781" y="347" key="SettingsEditor" timestamp="1589207121415">
       <screen x="0" y="0" width="2560" height="1410" />
     </state>
