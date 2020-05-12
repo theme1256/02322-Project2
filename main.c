@@ -79,7 +79,28 @@ int main() {
         } else if (strcmp(ptr, "NOT") == 0) {
             printf("Found NOT\n");
             strcat(output, "1001");
+            // Move pointer to next split, should be DR
             ptr = strtok(NULL, delim);
+            // Try to find out if it is R1-R7
+            findRegister(test, ptr);
+            if (strcmp(test, "") == 0) {
+                printf("Didn't find a register, try again\n");
+                continue;
+            }
+            // Add the binary equivalent to output
+            strcat(output, test);
+            // Move pointer to next split, should be SR
+            ptr = strtok(NULL, delim);
+            // Try to find out if it is R1-R7
+            findRegister(test, ptr);
+            if (strcmp(test, "") == 0) {
+                printf("Didn't find a register, try again\n");
+                continue;
+            }
+            // Add the binary equivalent to output
+            strcat(output, test);
+            // Add 6 ones
+            strcat(output, "111111");
         } else if (strcmp(ptr, "BR") == 0) {
             printf("Found BR\n");
             strcat(output, "0000");
@@ -87,15 +108,42 @@ int main() {
         } else if (strcmp(ptr, "LD") == 0) {
             printf("Found BR\n");
             strcat(output, "0010");
+            // Move pointer to next split, should be DR
             ptr = strtok(NULL, delim);
+            // Try to find out if it is R1-R7
+            findRegister(test, ptr);
+            if (strcmp(test, "") == 0) {
+                printf("Didn't find a register, try again\n");
+                continue;
+            }
+            // Add the binary equivalent to output
+            strcat(output, test);
         } else if (strcmp(ptr, "LDR") == 0) {
             printf("Found BR\n");
             strcat(output, "0110");
+            // Move pointer to next split, should be DR
             ptr = strtok(NULL, delim);
+            // Try to find out if it is R1-R7
+            findRegister(test, ptr);
+            if (strcmp(test, "") == 0) {
+                printf("Didn't find a register, try again\n");
+                continue;
+            }
+            // Add the binary equivalent to output
+            strcat(output, test);
         } else if (strcmp(ptr, "ST") == 0) {
             printf("Found BR\n");
             strcat(output, "0011");
+            // Move pointer to next split, should be SR
             ptr = strtok(NULL, delim);
+            // Try to find out if it is R1-R7
+            findRegister(test, ptr);
+            if (strcmp(test, "") == 0) {
+                printf("Didn't find a register, try again\n");
+                continue;
+            }
+            // Add the binary equivalent to output
+            strcat(output, test);
         } else {
             printf("Didn't recognize instruction, try again\n");
             continue;
