@@ -282,9 +282,11 @@ void findRegister(char *rtn, char *ptr) {
     }
 }
 
-void decToBinary(char *rtn, int n, int length) {
+void decToBinary(char *rtn, int n, int length, int neg) {
     // a is set to length 11, because that's the longest binary number needed
     int a[11] = {0}, i;
+    if (neg == 1)
+        n--;
     // Math to create an integer array with 1's and 0's
     for (i = length-1; n > 0; i--) {
         a[i] = n % 2;
@@ -292,27 +294,9 @@ void decToBinary(char *rtn, int n, int length) {
     }
     // Converting the int-array to chars and appending to return-value
     for (i = 0; i < length; i++) {
-        if (i == 0) // First bit has to be 0, because it's positive
+        if (i == 0 && neg == 0) // First bit has to be 0, because it's positive
             strcat(rtn, "0");
-        else if (a[i] == 1)
-            strcat(rtn, "1");
-        else
-            strcat(rtn, "0");
-    }
-}
-void negDecToBinary(char *rtn, int n, int length) {
-    // a is set to length 11, because that's the longest binary number needed
-    int a[11] = {0}, i;
-    // Because it's supposed to be negative, remove 1 from n to comply with 2's
-    n--;
-    // Math to create an integer array with 1's and 0's
-    for (i = length-1; n > 0; i--) {
-        a[i] = n % 2;
-        n = n/2;
-    }
-    // Converting the int-array to chars and appending to return-value
-    for (i = 0; i < length; i++) {
-        if (i == 0) // First bit has to be 1, because it's negative
+        else if (i == 0 && neg == 1) // First bit has to be 1, because it's negative
             strcat(rtn, "1");
         else if (a[i] == 1)
             strcat(rtn, "1");
@@ -328,11 +312,11 @@ void decStringToBinary(char *rtn, char *ptr, int length, int offset) {
     if (strchr(ptr, '-') != NULL) {
         // It's a negative number, read as positive
         sscanf(&ptr[offset+1], "%d", &n);
-        negDecToBinary(rtn, n, length);
+        decToBinary(rtn, n, length, 1);
     } else {
         // It's a positive number
         sscanf(&ptr[offset], "%d", &n);
-        decToBinary(rtn, n, length);
+        decToBinary(rtn, n, length, 0);
     }
 }
 
