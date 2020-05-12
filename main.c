@@ -14,8 +14,6 @@ void findRegister(char *rtn, char *ptr);
 void decStringToBinary(char *rtn, char *ptr, int length, int offset);
 
 int main() {
-    printf("Hello, World!\n");
-
     // Init variables
     char input[MAX];
     char original[MAX];
@@ -37,7 +35,7 @@ int main() {
 
         /* Try to find which of the known commands */
         if (strcmp(ptr, "ADD") == 0) {
-            printf("Found ADD\n");
+            printf("Found ADD, converting to 0001\n");
             strcat(output, "0001");
             // Move pointer to next split, should be DR
             ptr = strtok(NULL, delim);
@@ -78,7 +76,7 @@ int main() {
             }
         }
         else if (strcmp(ptr, "NOT") == 0) {
-            printf("Found NOT\n");
+            printf("Found NOT, converting to 1001\n");
             strcat(output, "1001");
             // Move pointer to next split, should be DR
             ptr = strtok(NULL, delim);
@@ -104,7 +102,7 @@ int main() {
             strcat(output, "111111");
         }
         else if (strstr(ptr, "BR") != NULL) {
-            printf("Found BR\n");
+            printf("Found BR, converting to 0000\n");
             strcat(output, "0000");
             // check for flags n, z and/or p and add a 1 or 0
             if (strchr(ptr, 'n') != NULL) {
@@ -132,11 +130,13 @@ int main() {
                 strcat(output, bin);
             }
             else {
-                // It's probably a label
+                // It's a label
+                printf("Labels are not supported\n");
+                continue;
             }
         }
         else if (strcmp(ptr, "LD") == 0) {
-            printf("Found BR\n");
+            printf("Found LD, converting to 0010\n");
             strcat(output, "0010");
             // Move pointer to next split, should be DR
             ptr = strtok(NULL, delim);
@@ -158,11 +158,13 @@ int main() {
                 strcat(output, bin);
             }
             else {
-                //
+                // It's a label
+                printf("Labels are not supported\n");
+                continue;
             }
         }
         else if (strcmp(ptr, "LDR") == 0) {
-            printf("Found BR\n");
+            printf("Found LDR, converting to 0110\n");
             strcat(output, "0110");
             // Move pointer to next split, should be DR
             ptr = strtok(NULL, delim);
@@ -193,11 +195,13 @@ int main() {
                 strcat(output, bin);
             }
             else {
-                //
+                // It's a label
+                printf("Labels are not supported\n");
+                continue;
             }
         }
         else if (strcmp(ptr, "ST") == 0) {
-            printf("Found BR\n");
+            printf("Found ST, converting to 0011\n");
             strcat(output, "0011");
             // Move pointer to next split, should be SR
             ptr = strtok(NULL, delim);
@@ -219,7 +223,9 @@ int main() {
                 strcat(output, bin);
             }
             else {
-                //
+                // It's a label
+                printf("Labels are not supported\n");
+                continue;
             }
         }
         else {
@@ -236,7 +242,7 @@ int main() {
         /**/
 
         // Print the original command and the binary equivalent
-        printf("You entered: %s", original);
+        printf("\nYou entered: %s", original);
         printf("Binary equivalent: %s\n", output);
     }
     return 0;
@@ -245,28 +251,28 @@ int main() {
 void findRegister(char *rtn, char *ptr) {
     strcpy(rtn, "");
     if (strcmp(ptr, "R0") == 0) {
-        printf("Found R0\n");
+        printf("Found R0, converting to 000\n");
         strcat(rtn, "000");
     } else if (strcmp(ptr, "R1") == 0) {
-        printf("Found R1\n");
+        printf("Found R1, converting to 001\n");
         strcat(rtn, "001");
     } else if (strcmp(ptr, "R2") == 0) {
-        printf("Found R2\n");
+        printf("Found R2, converting to 010\n");
         strcat(rtn, "010");
     } else if (strcmp(ptr, "R3") == 0) {
-        printf("Found R3\n");
+        printf("Found R3, converting to 011\n");
         strcat(rtn, "011");
     } else if (strcmp(ptr, "R4") == 0) {
-        printf("Found R4\n");
+        printf("Found R4, converting to 100\n");
         strcat(rtn, "100");
     } else if (strcmp(ptr, "R5") == 0) {
-        printf("Found R5\n");
+        printf("Found R5, converting to 101\n");
         strcat(rtn, "101");
     } else if (strcmp(ptr, "R6") == 0) {
-        printf("Found R6\n");
+        printf("Found R6, converting to 110\n");
         strcat(rtn, "110");
     } else if (strcmp(ptr, "R7") == 0) {
-        printf("Found R7\n");
+        printf("Found R7, converting to 111\n");
         strcat(rtn, "111");
     }
 }
@@ -281,7 +287,29 @@ void decToBinary(char *rtn, int n, int length) {
     }
     // Converting the int-array to chars and appending to return-value
     for (i = 0; i < length; i++) {
-        if (a[i] == 1)
+        if (i == 0) // First bit has to be 0, because it's positive
+            strcat(rtn, "0");
+        else if (a[i] == 1)
+            strcat(rtn, "1");
+        else
+            strcat(rtn, "0");
+    }
+}
+void negDecToBinary(char *rtn, int n, int length) {
+    // a is set to length 11, because that's the longest binary number needed
+    int a[11] = {0}, i;
+    // Because it's supposed to be negative, remove 1 from n to comply with 2's
+    n--;
+    // Math to create an integer array with 1's and 0's
+    for (i = length-1; n > 0; i--) {
+        a[i] = n % 2;
+        n = n/2;
+    }
+    // Converting the int-array to chars and appending to return-value
+    for (i = 0; i < length; i++) {
+        if (i == 0) // First bit has to be 1, because it's negative
+            strcat(rtn, "1");
+        else if (a[i] == 1)
             strcat(rtn, "1");
         else
             strcat(rtn, "0");
@@ -292,8 +320,15 @@ void decStringToBinary(char *rtn, char *ptr, int length, int offset) {
     strcpy(rtn, "");
     int n = 0;
     // Convert the string to an integer
-    sscanf(&ptr[offset], "%d", &n);
-    decToBinary(rtn, n, length);
+    if (strchr(ptr, '-') != NULL) {
+        // It's a negative number, read as positive
+        sscanf(&ptr[offset+1], "%d", &n);
+        negDecToBinary(rtn, n, length);
+    } else {
+        // It's a positive number
+        sscanf(&ptr[offset], "%d", &n);
+        decToBinary(rtn, n, length);
+    }
 }
 
 // Suppression for Clion warnings
