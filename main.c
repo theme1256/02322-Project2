@@ -15,17 +15,18 @@ void decStringToBinary(char *rtn, char *ptr, int length, int offset);
 
 int main() {
     // Init variables
-    char in_file[32];
-    char out_file[32];
+    char in_file[32], out_file[32], input[MAX], original[MAX], output[MAX], empty[] = "", delim[] = " ,\n",  test[] = "";
     FILE *f_i, *f_o;
-    char input[MAX];
-    char output[MAX];
-    char empty[] = "";
-    char delim[] = " ,\n";
-    char test[] = "";
 
     // Init infinite loop
     while (1) {
+        strcpy(output, empty);
+        // Get input from stdin and make a copy for later use
+        printf("Input an LC3 assembly instruction:");
+        fgets(input, MAX, stdin);
+        strcpy(original, input);/**/
+
+        /*
         // Get filename from user
         printf("Input filename (without .asm):");
         fgets(in_file, MAX, stdin);
@@ -42,7 +43,7 @@ int main() {
         // Loop through entire input-file
         while (fgets(input, MAX, f_i)) {
             // Clear output
-            strcpy(output, empty);
+            strcpy(output, empty);/**/
 
             // Split input by space and comma and remove trailing \n
             char *ptr = strtok(input, delim);
@@ -245,10 +246,12 @@ int main() {
             /**/
 
             // Write binary to file
-            fputc(output, f_o);
+            printf("\nYou entered: %s", original);
+            printf("Binary equivalent: %s\n", output);
+        /*fputc(output, f_o);
         }
         fclose(f_i);
-        fclose(f_o);
+        fclose(f_o);/**/
     }
     return 0;
 }
